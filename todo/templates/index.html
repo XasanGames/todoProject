@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO List</title>
+
+    <!-- Встроенные стили -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .task-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #4CAF50;
+        }
+
+        .task-description {
+            font-size: 1em;
+            color: #555;
+        }
+
+        .task-status {
+            font-style: italic;
+            color: #777;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to your TODO List</h1>
+
+    <div>
+        <h2>Your Tasks</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <span class="task-title">{{ task.title }}</span><br>
+                    <p class="task-description">{{ task.description }}</p>
+                    <p class="task-status">Status: {% if task.completed %}Completed{% else %}Not completed{% endif %}</p>
+                </li>
+            {% empty %}
+                <li>No tasks available</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="right-top">
+        <div class="login">
+            <a href="login/">Login</a>
+        </div>
+        <div class="register">
+            
+        </div>
+    </div>
+
+    <a href="{% url 'add-task' %}">Add a new task</a>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Site</title>
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar {
+    background-color: #333;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+}
+
+.nav-bar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-bar li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.nav-bar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+
+.login-form {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+    margin-top: 0;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form button {
+    width: 100%;
+    padding: 1em;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form button:hover {
+    background-color: #555;
+}
+
+.gradient-1 {
+    background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+}
+
+.gradient-2 {
+    background-image: linear-gradient(to top, #c9e4ca 0%, #e3eeff 99%, #e3eeff 100%);
+}
+
+.gradient-3 {
+    background-image: linear-gradient(to top, #87ceeb 0%, #e3eeff 99%, #e3eeff 100%);
+}
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="login-form">
+            <h2>Register</h2>
+            <form>
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <button>Register</button>
+            </form>
+        </div>
+    </div>
+    
+<script>
+    // Обработчик отправки формы
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const response = await fetch('/api/token/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        if (response.ok) {
+          // При успешном входе можно сохранить токены в localStorage и перенаправить пользователя
+          localStorage.setItem('access_token', data.access);
+          localStorage.setItem('refresh_token', data.refresh);
+          document.getElementById('message').textContent = 'Вход выполнен успешно!';
+          // Пример перенаправления, если есть главная страница:
+          // window.location.href = '/';
+        } else {
+          document.getElementById('message').textContent = data.detail || 'Ошибка входа';
+        }
+      } catch (error) {
+        document.getElementById('message').textContent = 'Ошибка подключения';
+      }
+    });
+</script>
+</body>
+</html>
